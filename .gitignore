@@ -1,0 +1,15 @@
+# Python / app
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+data/
+venv/
+.env
+
+# Builder session notes stay private
+muse-vault/
+.agents/
+
+# macOS
+.DS_Store
