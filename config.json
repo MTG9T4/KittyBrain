@@ -1,8 +1,8 @@
 {
-  "mode": "showcase",
+  "mode": "live",
   "chain": "solana",
-  "pair": "",
-  "pair_note": "Blank until verified. Point at our pool only after launch; live mode with a blank pair reports an error and never polls.",
+  "pair": "G3EAqYPYpiFgb1EGNMgeLhJvCU8BZsJCjnzUgKPYmpCX",
+  "pair_note": "OUR pool: KITTYBRAIN/SOL pump.fun bonding curve, verified 2026-09-18 (mint 77xPMXy8pDhbk35YiWzNCdnWkBR7XjLntS4QnvMspump, DEX Screener pair live with priceUsd).",
   "second_market": {"chain": "", "pair": ""},
   "second_market_note": "Blank until a real second pair is verified (honesty rule).",
   "poll_seconds": 30,
