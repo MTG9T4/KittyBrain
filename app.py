@@ -81,7 +81,9 @@ def load_config(path="config.json"):
 
 
 def resolve_host(value):
-    """Phase 1 gate: only loopback is allowed; anything else is clamped."""
+    """Loopback by default; 0.0.0.0 only with KITTYBRAIN_PUBLIC=1 (hosted deploy)."""
+    if value == "0.0.0.0" and os.environ.get("KITTYBRAIN_PUBLIC") == "1":
+        return "0.0.0.0"
     if value != LOOPBACK_HOST:
         print(
             "warning: non-loopback host %r refused; using %s (local only)"
@@ -539,10 +541,18 @@ def build_state(config, db_path=DB_FILENAME):
     return state
 
 
+def resolve_port(config):
+    """PORT env (hosted deploy) wins; falls back to config file, then default."""
+    try:
+        return int(os.environ.get("PORT", config.get("port", DEFAULT_PORT)))
+    except (TypeError, ValueError):
+        return config.get("port", DEFAULT_PORT)
+
+
 def main(argv=None):
     config = load_config()
     host = resolve_host(config.get("host", LOOPBACK_HOST))
-    port = config.get("port", DEFAULT_PORT)
+    port = resolve_port(config)
     STATE.update(build_state(config))
     stop_event = threading.Event()
     worker = threading.Thread(
@@ -550,8 +560,9 @@ def main(argv=None):
     )
     worker.start()
     server = ThreadingHTTPServer((host, port), Handler)
-    print("%s v%s on http://%s:%d (%s mode, local only)"
-          % (BRAND, VERSION, host, port, config.get("mode", "showcase")))
+    scope = "local only" if host == LOOPBACK_HOST else "public bind (hosted)"
+    print("%s v%s on http://%s:%d (%s mode, %s)"
+          % (BRAND, VERSION, host, port, config.get("mode", "showcase"), scope))
     try:
         server.serve_forever()
     except KeyboardInterrupt:

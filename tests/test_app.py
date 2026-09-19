@@ -76,9 +76,43 @@ class EnvelopeTest(unittest.TestCase):
 
 class ConfigTest(unittest.TestCase):
     def test_loopback_clamp(self):
-        self.assertEqual(app.resolve_host("127.0.0.1"), "127.0.0.1")
-        self.assertEqual(app.resolve_host("0.0.0.0"), "127.0.0.1")
-        self.assertEqual(app.resolve_host("example.com"), "127.0.0.1")
+        old = os.environ.pop("KITTYBRAIN_PUBLIC", None)
+        try:
+            self.assertEqual(app.resolve_host("127.0.0.1"), "127.0.0.1")
+            self.assertEqual(app.resolve_host("0.0.0.0"), "127.0.0.1")
+            self.assertEqual(app.resolve_host("example.com"), "127.0.0.1")
+        finally:
+            if old is not None:
+                os.environ["KITTYBRAIN_PUBLIC"] = old
+
+    def test_public_bind_opt_in(self):
+        old = os.environ.get("KITTYBRAIN_PUBLIC")
+        os.environ["KITTYBRAIN_PUBLIC"] = "1"
+        try:
+            self.assertEqual(app.resolve_host("0.0.0.0"), "0.0.0.0")
+            self.assertEqual(app.resolve_host("127.0.0.1"), "127.0.0.1")
+            self.assertEqual(app.resolve_host("example.com"), "127.0.0.1")
+        finally:
+            if old is None:
+                del os.environ["KITTYBRAIN_PUBLIC"]
+            else:
+                os.environ["KITTYBRAIN_PUBLIC"] = old
+
+    def test_resolve_port(self):
+        old = os.environ.get("PORT")
+        try:
+            os.environ.pop("PORT", None)
+            self.assertEqual(app.resolve_port({}), 8000)
+            self.assertEqual(app.resolve_port({"port": 9000}), 9000)
+            os.environ["PORT"] = "12345"
+            self.assertEqual(app.resolve_port({"port": 9000}), 12345)
+            os.environ["PORT"] = "junk"
+            self.assertEqual(app.resolve_port({"port": 9000}), 9000)
+        finally:
+            if old is None:
+                os.environ.pop("PORT", None)
+            else:
+                os.environ["PORT"] = old
 
     def test_load_config_defaults(self):
         with tempfile.NamedTemporaryFile(
