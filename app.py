@@ -549,9 +549,16 @@ def resolve_port(config):
         return config.get("port", DEFAULT_PORT)
 
 
+def effective_host(config):
+    """Hosting deploy: KITTYBRAIN_PUBLIC=1 means bind 0.0.0.0, else loopback rules."""
+    if os.environ.get("KITTYBRAIN_PUBLIC") == "1":
+        return "0.0.0.0"
+    return resolve_host(config.get("host", LOOPBACK_HOST))
+
+
 def main(argv=None):
     config = load_config()
-    host = resolve_host(config.get("host", LOOPBACK_HOST))
+    host = effective_host(config)
     port = resolve_port(config)
     STATE.update(build_state(config))
     stop_event = threading.Event()

@@ -114,6 +114,20 @@ class ConfigTest(unittest.TestCase):
             else:
                 os.environ["PORT"] = old
 
+    def test_effective_host(self):
+        old = os.environ.pop("KITTYBRAIN_PUBLIC", None)
+        try:
+            self.assertEqual(app.effective_host({}), "127.0.0.1")
+            self.assertEqual(app.effective_host({"host": "0.0.0.0"}), "127.0.0.1")
+            os.environ["KITTYBRAIN_PUBLIC"] = "1"
+            self.assertEqual(app.effective_host({}), "0.0.0.0")
+            self.assertEqual(app.effective_host({"host": "127.0.0.1"}), "0.0.0.0")
+        finally:
+            if old is None:
+                os.environ.pop("KITTYBRAIN_PUBLIC", None)
+            else:
+                os.environ["KITTYBRAIN_PUBLIC"] = old
+
     def test_load_config_defaults(self):
         with tempfile.NamedTemporaryFile(
             mode="w", suffix=".json", delete=False
