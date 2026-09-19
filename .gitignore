@@ -1,15 +1,5 @@
-# Python / app
-__pycache__/
-*.py[cod]
-*.sqlite3
-*.db
-data/
-venv/
-.env
-
-# Builder session notes stay private
+# Private builder notes — never publish to the public repo.
 muse-vault/
 .agents/
-
-# macOS
-.DS_Store
+*.sqlite3
+__pycache__/

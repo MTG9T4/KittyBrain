@@ -1,0 +1,14 @@
+{
+  "mode": "showcase",
+  "chain": "solana",
+  "pair": "",
+  "pair_note": "Blank until verified. Point at our pool only after launch; live mode with a blank pair reports an error and never polls.",
+  "second_market": {"chain": "", "pair": ""},
+  "second_market_note": "Blank until a real second pair is verified (honesty rule).",
+  "poll_seconds": 30,
+  "showcase_seed": 7,
+  "showcase_step_seconds": 1,
+  "host": "127.0.0.1",
+  "host_note": "Local only in v0.1; any non-loopback value is clamped back.",
+  "port": 8000
+}

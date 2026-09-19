@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KITTYBRAIN — observation terminal (local showcase)</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a class="skip" href="#activity">Skip to the live view</a>
+<header class="topbar">
+  <span class="brand">KITTYBRAIN</span>
+  <span class="badge" id="mode-badge">…</span>
+  <span class="spacer"></span>
+  <span class="placeholder-note">Placeholder name · ticker undecided · local only</span>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" id="hero" aria-label="Introduction">
+    <figure class="hero-mascot" id="concept-figure">
+      <svg id="cat-sprite" viewBox="0 0 240 240" role="button" tabindex="0"
+           aria-label="Cartoon cat mascot. Press or tap to pet it."
+           xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="csEyeGrad" cx="42%" cy="38%" r="72%">
+            <stop offset="0%" stop-color="#ffd873"/>
+            <stop offset="55%" stop-color="#e8a83e"/>
+            <stop offset="100%" stop-color="#9c6414"/>
+          </radialGradient>
+          <radialGradient id="csHaloGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d9a441" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#d9a441" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="csEyeGlowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffbf4d" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#ffbf4d" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse id="cat-halo" cx="120" cy="128" rx="115" ry="110"
+                 fill="url(#csHaloGrad)" opacity="0.1"/>
+        <g id="cat-inner">
+          <g id="cat-tail">
+            <path d="M168 210 C 200 208 218 190 216 162 C 215 150 210 140 202 134"
+                  fill="none" stroke="#c49b6c" stroke-width="15" stroke-linecap="round"/>
+            <path d="M214 170 C 213 156 209 143 202 134" fill="none"
+                  stroke="#a8845a" stroke-width="15" stroke-linecap="round"/>
+          </g>
+          <g id="cat-body">
+            <path d="M66 218 C 60 182 74 150 94 134 C 103 126 137 126 146 134
+                     C 166 150 180 182 174 218 C 174 225 168 229 160 229 L 80 229
+                     C 72 229 66 225 66 218 Z" fill="#c49b6c"/>
+            <path d="M104 138 C 100 162 98 192 100 216 C 108 224 132 224 140 216
+                     C 142 192 140 162 136 138 C 126 132 114 132 104 138 Z"
+                  fill="#ece5d8" opacity="0.35"/>
+            <path d="M106 176 C 102 194 102 208 104 220
+                     M134 176 C 138 194 138 208 136 220" fill="none"
+                  stroke="#a8845a" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+          </g>
+          <g id="cat-paw-l">
+            <ellipse cx="100" cy="222" rx="17" ry="11" fill="#c49b6c"/>
+            <path d="M95 216 v9 M105 216 v9" fill="none"
+                  stroke="#a8845a" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+          </g>
+          <g id="cat-paw-r">
+            <ellipse cx="140" cy="222" rx="17" ry="11" fill="#c49b6c"/>
+            <path d="M136 216 v9 M145 216 v9" fill="none"
+                  stroke="#a8845a" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+          </g>
+          <g id="cat-head">
+            <path d="M78 62 L92 14 L124 50 Z" fill="#c49b6c"/>
+            <path d="M86 52 L94 28 L112 46 Z" fill="#c98f7f"/>
+            <g id="cat-ear-r">
+              <path d="M162 62 L148 14 L116 50 Z" fill="#c49b6c"/>
+              <path d="M154 52 L146 28 L128 46 Z" fill="#c98f7f"/>
+            </g>
+            <circle cx="120" cy="92" r="54" fill="#c49b6c"/>
+            <path d="M106 48 q1 7 0 12 M120 44 v13 M134 48 q-1 7 0 12"
+                  fill="none" stroke="#a8845a" stroke-width="4.5" stroke-linecap="round"/>
+            <g id="cat-eyeglow" opacity="0.3">
+              <circle cx="98" cy="88" r="20" fill="url(#csEyeGlowGrad)"/>
+              <circle cx="142" cy="88" r="20" fill="url(#csEyeGlowGrad)"/>
+            </g>
+            <g id="cat-eye-l">
+              <circle cx="98" cy="88" r="15" fill="#241a10"/>
+              <circle cx="98" cy="88" r="12.5" fill="url(#csEyeGrad)"/>
+              <ellipse cx="98" cy="88" rx="3" ry="9" fill="#140e07"/>
+              <circle cx="94" cy="83.5" r="2.4" fill="#ffffff" opacity="0.92"/>
+              <circle cx="102" cy="93" r="1.1" fill="#ffffff" opacity="0.6"/>
+            </g>
+            <g id="cat-eye-r">
+              <circle cx="142" cy="88" r="15" fill="#241a10"/>
+              <circle cx="142" cy="88" r="12.5" fill="url(#csEyeGrad)"/>
+              <ellipse cx="142" cy="88" rx="3" ry="9" fill="#140e07"/>
+              <circle cx="138" cy="83.5" r="2.4" fill="#ffffff" opacity="0.92"/>
+              <circle cx="146" cy="93" r="1.1" fill="#ffffff" opacity="0.6"/>
+            </g>
+            <g id="cat-lids">
+              <circle id="cat-lid-l" cx="98" cy="88" r="16" fill="#c49b6c"/>
+              <circle id="cat-lid-r" cx="142" cy="88" r="16" fill="#c49b6c"/>
+            </g>
+            <path d="M115 109 L125 109 L120 116 Z" fill="#c1666b"
+                  stroke="#c1666b" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M120 116 v4 M120 120 C 117 126 111 128 106 124
+                     M120 120 C 123 126 129 128 134 124" fill="none"
+                  stroke="#7a5238" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M82 104 L56 98 M83 112 L54 112 M84 120 L58 128
+                     M158 104 L184 98 M157 112 L186 112 M156 120 L182 128"
+                  fill="none" stroke="#ece5d8" stroke-width="2"
+                  stroke-linecap="round" opacity="0.35"/>
+          </g>
+        </g>
+      </svg>
+      <!-- Fear mood: a dog chases the fleeing cat — the SAME cartoon cat as
+           the Normal mascot, hand-drawn as a side-profile runner in the
+           mascot's exact flat-vector palette (tan #c49b6c body, cream belly,
+           amber eye, pink nose/mouth, taupe stripes/legs). Manager redirect
+           2026-09-18: no <use> reuse of the front-facing mascot parts (they
+           failed to resolve on the live page and read wrong in a side view);
+           consistency comes from the shared palette + hand, per
+           .agents/audit/catmoods_harness.py palette-token asserts.
+           MTG 2026-09-18 rebalance: the cat is scaled to 0.77 (same parts,
+           feet re-planted) so the GREY dog reads as the bigger threat; the
+           dog is cool mid-grey with darker ear/legs, keeping the pink collar
+           + gold tag for contrast on the near-black panel. Hand-coded inline
+           SVG, no asset files. CSS loops run until another mood is picked;
+           reduced motion freezes this composed frame. -->
+      <svg id="mood-fear-scene" class="mood-scene" viewBox="0 0 240 240" hidden
+           role="img" aria-label="Cartoon loop: a dog chases the fleeing cat — the mascot cat as a side-profile runner in its own palette (illustrative fiction)"
+           xmlns="http://www.w3.org/2000/svg">
+        <g class="mg-scroll" fill="#463b2e">
+          <rect x="-48" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="0" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="48" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="96" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="144" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="192" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="240" y="204" width="26" height="3" rx="1.5"/>
+        </g>
+        <g class="mg-speed" fill="none" stroke="#8a8070" stroke-width="2.5"
+           stroke-linecap="round" opacity="0.5">
+          <path d="M14 132 h20"/>
+          <path d="M4 148 h26" style="animation-delay:-0.15s"/>
+          <path d="M12 164 h18" style="animation-delay:-0.3s"/>
+        </g>
+        <circle class="mg-puff" cx="36" cy="198" r="4" fill="#8a8070" opacity="0.45"/>
+        <circle class="mg-puff" cx="50" cy="200" r="3" fill="#8a8070" opacity="0.45"
+                style="animation-delay:-0.26s"/>
+        <!-- DOG (chaser, behind — GREY per MTG 2026-09-18: cool mid-grey
+             body #9aa3ad, darker grey legs/floppy ear, light grey belly +
+             snout; pink collar + gold tag kept for contrast so it pops on
+             the near-black panel and still reads as a dog). MTG 2026-09-18
+             follow-up: nudged 64→52 so the re-curved cat tail can never
+             reach the dog's face. -->
+        <g class="mg-bob mg-bob-dog">
+          <g id="fear-dog" transform="translate(52 138)">
+            <g class="mg-tail"><path d="M-28 -8 C -38 -12 -43 -20 -41 -31" fill="none"
+                  stroke="#9aa3ad" stroke-width="7" stroke-linecap="round"/></g>
+            <g class="mg-leg-b">
+              <path d="M-16 12 l-7 42 M-7 12 l-4 42" fill="none"
+                    stroke="#6e767f" stroke-width="6" stroke-linecap="round"/>
+              <ellipse cx="-23" cy="56" rx="5" ry="3.5" fill="#6e767f"/>
+              <ellipse cx="-11" cy="56" rx="5" ry="3.5" fill="#6e767f"/>
+            </g>
+            <path d="M14 -18 L30 -26 L40 0 L18 4 Z" fill="#9aa3ad"/>
+            <ellipse cx="0" cy="0" rx="32" ry="17" fill="#9aa3ad"/>
+            <ellipse cx="2" cy="7" rx="18" ry="6" fill="#c9ced4"/>
+            <g class="mg-leg-a">
+              <path d="M16 12 l7 42 M24 11 l10 40" fill="none"
+                    stroke="#6e767f" stroke-width="6" stroke-linecap="round"/>
+              <ellipse cx="23" cy="56" rx="5" ry="3.5" fill="#6e767f"/>
+              <ellipse cx="34" cy="53" rx="5" ry="3.5" fill="#6e767f"/>
+            </g>
+            <path d="M18 -22 q-7 12 0 24" fill="none" stroke="#c1666b"
+                  stroke-width="5" stroke-linecap="round"/>
+            <circle cx="14" cy="4" r="3.4" fill="#d9a441"/>
+            <path d="M24 -24 q-9 -3 -11 6 q-2 12 6 14 q7 -6 5 -20 z" fill="#5b636c"/>
+            <circle cx="32" cy="-14" r="16" fill="#9aa3ad"/>
+            <circle cx="36" cy="-20" r="4.5" fill="#241a10"/>
+            <circle cx="34.5" cy="-21.5" r="1.3" fill="#ffffff" opacity="0.92"/>
+            <path d="M40 -20 q16 1 15 9 q-1 8 -14 7 l-3 -6 z" fill="#c9ced4"/>
+            <circle cx="54" cy="-19" r="4" fill="#241a10"/>
+            <ellipse cx="48" cy="-6" rx="4.5" ry="3.5" fill="#241a10"/>
+            <path d="M45 -5 q2 7 7 6" fill="none" stroke="#c1666b"
+                  stroke-width="3.5" stroke-linecap="round"/>
+          </g>
+        </g>
+        <!-- CAT (fleeing — mascot palette, side profile: pinned ear, wide
+             scared eye, open mouth, scissoring legs). Scaled
+             0.77 per MTG 2026-09-18 so the dog reads as the bigger threat;
+             translate y 130→144 re-plants the feet on the same ground line.
+             MTG 2026-09-18 follow-up: tail shortened and re-curved upright
+             (was streaming back into the dog's face) so the tail wag clears
+             the nose/head across the whole -12°..+14° sweep. -->
+        <circle class="mg-puff" cx="122" cy="197" r="4.5" fill="#8a8070" opacity="0.45"
+                style="animation-delay:-0.13s"/>
+        <circle class="mg-puff" cx="134" cy="199" r="3" fill="#8a8070" opacity="0.45"
+                style="animation-delay:-0.39s"/>
+        <g class="mg-bob">
+          <g class="mg-sprint">
+            <g id="fear-cat" transform="translate(150 144) scale(0.77)">
+              <g class="mg-tail">
+                <path d="M-36 -6 C -40 -16 -40 -30 -36 -42" fill="none"
+                      stroke="#c49b6c" stroke-width="9" stroke-linecap="round"/>
+                <path d="M-37 -28 C -38 -34 -37 -39 -36 -42" fill="none"
+                      stroke="#a8845a" stroke-width="9" stroke-linecap="round"/>
+              </g>
+              <g class="mg-leg-b">
+                <path d="M-22 11 l-8 45 M-13 12 l-4 44" fill="none"
+                      stroke="#a8845a" stroke-width="6.5" stroke-linecap="round"/>
+                <ellipse cx="-30" cy="57" rx="5.5" ry="4" fill="#a8845a"/>
+                <ellipse cx="-17" cy="57" rx="5.5" ry="4" fill="#a8845a"/>
+              </g>
+              <path d="M26 -16 L46 -26 L52 0 L30 4 Z" fill="#c49b6c"/>
+              <ellipse cx="0" cy="0" rx="40" ry="17" fill="#c49b6c"/>
+              <ellipse cx="2" cy="7" rx="24" ry="7" fill="#ece5d8" opacity="0.5"/>
+              <path d="M-16 -13 q4 7 2 12 M-2 -16 q5 7 3 14 M12 -14 q4 7 2 13"
+                    fill="none" stroke="#a8845a" stroke-width="4"
+                    stroke-linecap="round" opacity="0.85"/>
+              <g class="mg-leg-a">
+                <path d="M25 12 l9 44 M33 11 l13 40" fill="none"
+                      stroke="#a8845a" stroke-width="6.5" stroke-linecap="round"/>
+                <ellipse cx="34" cy="57" rx="5.5" ry="4" fill="#a8845a"/>
+                <ellipse cx="46" cy="52" rx="5.5" ry="4" fill="#a8845a"/>
+              </g>
+              <g class="mg-head">
+                <circle cx="46" cy="-16" r="20" fill="#c49b6c"/>
+                <path d="M34 -30 q2 -9 12 -10 q1 9 -6 12 z" fill="#c49b6c"/>
+                <path d="M37 -30 q2 -6 8 -7 q1 7 -4 9 z" fill="#c98f7f"/>
+                <path d="M38 -33 q1 4 0 6 M46 -35 v7 M54 -33 q-1 4 0 6" fill="none"
+                      stroke="#a8845a" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="53" cy="-18" r="8.5" fill="#241a10"/>
+                <circle cx="53" cy="-18" r="7" fill="#e8a83e"/>
+                <circle cx="53" cy="-18" r="3.4" fill="#140e07"/>
+                <circle cx="50.5" cy="-21" r="1.8" fill="#ffffff" opacity="0.92"/>
+                <circle cx="55.5" cy="-15.5" r="0.9" fill="#ffffff" opacity="0.6"/>
+                <path d="M63 -12 L67 -10 L63 -6 Z" fill="#c1666b"/>
+                <ellipse cx="60" cy="0" rx="6.5" ry="7" fill="#241a10"/>
+                <ellipse cx="61" cy="3" rx="3.2" ry="3" fill="#c1666b"/>
+                <path d="M57 -7 L47 -10 M58 -3 L48 -3 M57 1 L49 5" fill="none"
+                      stroke="#ece5d8" stroke-width="1.6" stroke-linecap="round"
+                      opacity="0.35"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <!-- Hunt mood: the SAME mascot cat stalks and pounces after a mouse —
+           hand-drawn side-profile in the mascot's exact palette (tan body,
+           cream belly, amber narrowed eye, pink nose, taupe stripes), ears
+           perked forward, body low in a predator lean; the gray-blue mouse
+           (big round ears, thin tail) dodges ahead. One 1600ms loop: crouch
+           creep → spring → land → recoil; the mouse dodge shares the period,
+           so the loop seams exactly. Hand-coded inline SVG, no asset files;
+           reduced motion freezes this composed frame. -->
+      <svg id="mood-hunt-scene" class="mood-scene" viewBox="0 0 240 240" hidden
+           role="img" aria-label="Cartoon loop: the cat pounces after a mouse — the mascot cat as a side-profile stalker in its own palette (illustrative fiction)"
+           xmlns="http://www.w3.org/2000/svg">
+        <g class="mg-scroll" fill="#463b2e">
+          <rect x="-48" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="0" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="48" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="96" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="144" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="192" y="204" width="26" height="3" rx="1.5"/>
+          <rect x="240" y="204" width="26" height="3" rx="1.5"/>
+        </g>
+        <g class="mg-speed" fill="none" stroke="#8a8070" stroke-width="2.5"
+           stroke-linecap="round" opacity="0.5">
+          <path d="M10 150 h18"/>
+          <path d="M4 166 h22" style="animation-delay:-0.22s"/>
+        </g>
+        <circle class="mg-puff" cx="48" cy="197" r="4" fill="#8a8070" opacity="0.45"/>
+        <circle class="mg-puff" cx="62" cy="199" r="3" fill="#8a8070" opacity="0.45"
+                style="animation-delay:-0.26s"/>
+        <!-- CAT (stalker — mascot palette, side profile: perked ears, narrowed
+             eye, low tail, body leant forward; the pounce loop carries it). -->
+        <g class="mg-pounce">
+          <g id="hunt-cat" transform="translate(88 144)">
+            <g class="mg-tail">
+              <path d="M-38 2 C -54 4 -64 8 -68 0" fill="none"
+                    stroke="#c49b6c" stroke-width="9" stroke-linecap="round"/>
+              <path d="M-62 6 C -65 4 -67 2 -68 0" fill="none"
+                    stroke="#a8845a" stroke-width="9" stroke-linecap="round"/>
+            </g>
+            <g class="mg-leg-b">
+              <path d="M-26 8 l-10 44 M-16 9 l-6 43" fill="none"
+                    stroke="#a8845a" stroke-width="6" stroke-linecap="round"/>
+              <ellipse cx="-36" cy="53" rx="5" ry="3.5" fill="#a8845a"/>
+              <ellipse cx="-22" cy="53" rx="5" ry="3.5" fill="#a8845a"/>
+            </g>
+            <path d="M22 -14 L40 -24 L48 4 L28 2 Z" fill="#c49b6c"/>
+            <ellipse cx="-2" cy="0" rx="42" ry="15" fill="#c49b6c"/>
+            <ellipse cx="0" cy="6" rx="24" ry="6.5" fill="#ece5d8" opacity="0.5"/>
+            <path d="M-18 -11 q4 7 2 12 M-4 -14 q5 7 3 13 M10 -13 q4 7 2 12"
+                  fill="none" stroke="#a8845a" stroke-width="4"
+                  stroke-linecap="round" opacity="0.85"/>
+            <g class="mg-leg-a">
+              <path d="M22 10 l12 42 M30 9 l14 40" fill="none"
+                    stroke="#a8845a" stroke-width="6" stroke-linecap="round"/>
+              <ellipse cx="34" cy="53" rx="5" ry="3.5" fill="#a8845a"/>
+              <ellipse cx="44" cy="50" rx="5" ry="3.5" fill="#a8845a"/>
+            </g>
+            <g class="mg-head">
+              <circle cx="42" cy="-10" r="19" fill="#c49b6c"/>
+              <path d="M30 -24 L36 -35 L45 -22 Z" fill="#c49b6c"/>
+              <path d="M32 -24 L36 -32 L42 -23 Z" fill="#c98f7f"/>
+              <path d="M36 -26 q1 4 0 5 M44 -28 v7 M52 -25 q-1 4 0 5" fill="none"
+                    stroke="#a8845a" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="48" cy="-14" r="7" fill="#241a10"/>
+              <ellipse cx="48" cy="-14" rx="5.8" ry="3.6" fill="#e8a83e"/>
+              <ellipse cx="48" cy="-14" rx="1.6" ry="3" fill="#140e07"/>
+              <circle cx="46" cy="-16" r="1.2" fill="#ffffff" opacity="0.92"/>
+              <path d="M58 -8 L62 -6 L58 -3 Z" fill="#c1666b"/>
+              <path d="M57 0 q4 3 8 0" fill="none" stroke="#7a5238"
+                    stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M54 -4 L44 -7 M55 0 L45 0 M54 3 L46 7" fill="none"
+                    stroke="#ece5d8" stroke-width="1.6" stroke-linecap="round"
+                    opacity="0.35"/>
+            </g>
+          </g>
+        </g>
+        <circle class="mg-puff" cx="168" cy="197" r="3" fill="#8a8070" opacity="0.45"
+                style="animation-delay:-0.13s"/>
+        <!-- MOUSE (gray-blue, big round ears, thin tail, tiny). -->
+        <g class="mg-dodge">
+          <g class="mg-bob-late">
+            <g id="hunt-mouse" transform="translate(196 186)">
+              <g class="mg-tail"><path d="M-8 3 C -16 4 -20 0 -19 -6" fill="none"
+                    stroke="#8f939b" stroke-width="1.8" stroke-linecap="round"/></g>
+              <circle cx="-3" cy="-9" r="5.5" fill="#a7adb5"/>
+              <circle cx="5" cy="-8" r="4.5" fill="#a7adb5"/>
+              <circle cx="-3" cy="-9" r="3" fill="#d3d6dc"/>
+              <circle cx="5" cy="-8" r="2.5" fill="#d3d6dc"/>
+              <circle cx="6" cy="-2" r="6" fill="#a7adb5"/>
+              <circle cx="0" cy="0" r="8.5" fill="#a7adb5"/>
+              <ellipse cx="1" cy="3" rx="5" ry="3.5" fill="#d3d6dc"/>
+              <g class="mg-leg-b"><path d="M-5 8 l-2 6 M1 8 l1 6" fill="none"
+                    stroke="#7c828c" stroke-width="1.8" stroke-linecap="round"/></g>
+              <g class="mg-leg-a"><path d="M4 8 l2 6 M9 7 l2 6" fill="none"
+                    stroke="#7c828c" stroke-width="1.8" stroke-linecap="round"/></g>
+              <circle cx="7" cy="-5" r="1.5" fill="#140e07"/>
+              <circle cx="6.5" cy="-5.5" r="0.6" fill="#ffffff" opacity="0.8"/>
+              <circle cx="12" cy="-3" r="1.6" fill="#241a10"/>
+              <path d="M9 -1 l5 -1 M9 1 l5 1" fill="none" stroke="#ece5d8"
+                    stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <span class="tap-hint" id="tap-hint" aria-hidden="true">tap me</span>
+      <figcaption id="mascot-caption">Cartoon mascot, hand-coded inline SVG (no asset files).
+        Illustrative only — not a scientific reconstruction, not final
+        branding. Tap or press it — it reacts.</figcaption>
+      <p class="motion-note" id="motion-note" hidden>Motion is off — the mood
+        scene shows a static frame. Cartoon fiction, not neuroscience.</p>
+    </figure>
+
+    <h1>The cat is watching the chart.</h1>
+    <p class="lede">KITTYBRAIN tracks a token price with plain moving averages
+      (MA5 vs MA20) and shows its work — every observation, every error,
+      and everything that isn&rsquo;t real.</p>
+    <ul class="chip-row" aria-label="Honest badges">
+      <li class="chip">Rule engine — no AI, no predictions</li>
+      <li class="chip">No wallet · never trades</li>
+      <li class="chip">Demo data labeled synthetic</li>
+      <li class="chip">Placeholder name · ticker undecided</li>
+    </ul>
+    <p class="fine">A real cat cortex holds ~250&nbsp;million
+      neurons<sup>[1]</sup> — this software runs arithmetic, not a brain.
+      Signals are observations, not financial advice.</p>
+    <p class="fine" id="mode-banner">Connecting to local server…</p>
+  </section>
+
+  <section class="panel hero-field" id="activity" aria-label="Cat activity visualization">
+    <h2>Cat activity field</h2>
+    <p class="sub">Volumetric procedural graph (~2,200 nodes, nearest-neighbor
+      links), driven by live engine activity. Illustrative geometry — not
+      brain data, not a brain model, not a neural net.</p>
+    <div class="cat-shell">
+      <canvas id="catchart" role="img" aria-label="Illustrative animated volumetric activity graph"></canvas>
+    </div>
+    <div class="mood-row" role="group" aria-label="Mood circuits (illustrative fiction)">
+      <button type="button" class="ghost mood-btn" id="mood-normal" aria-pressed="true">Normal</button>
+      <button type="button" class="ghost mood-btn" id="mood-fear" aria-pressed="false">Fear</button>
+      <button type="button" class="ghost mood-btn" id="mood-hunt" aria-pressed="false">Hunt</button>
+    </div>
+    <p class="fine mood-note">Mood circuits are illustrative fiction — play
+      only. The red (fear) and blue (hunt) glows are seeded decorations: no
+      real fear or hunt neurons are modeled, and no neuroscience claim is
+      made.</p>
+    <p class="fine viewport-hint">Drag to rotate · scroll or pinch to zoom · double-click to reset</p>
+    <div class="cat-controls">
+      <button class="ghost" id="motion-toggle" type="button">Pause motion</button>
+      <span class="fine" id="activity-readout">activity … / 1.00</span>
+    </div>
+  </section>
+
+  <div class="grid-2">
+    <section class="panel" aria-label="Market radar">
+      <h2>Market radar</h2>
+      <p class="sub">Tracked markets. Unknown fields read NO DATA — never zeros.</p>
+      <div class="table-scroll">
+        <table class="radar">
+          <thead><tr>
+            <th>Token/pool</th><th class="num">Price</th><th class="num">1h change</th>
+            <th class="num">Vol 24h</th><th class="num">Liquidity</th><th>Signal</th>
+          </tr></thead>
+          <tbody id="radar-body">
+            <tr><td colspan="6" class="nodata">Waiting for server…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Decision panel">
+      <h2>Decision panel</h2>
+      <p class="sub">Latest observation from the MA5/MA20 rule engine.</p>
+      <div class="decision-state waiting" id="decision-state">Waiting…</div>
+      <dl class="kv" id="decision-kv"></dl>
+      <div class="no-order">No order submitted — observation only. No wallet, no auto-trade.</div>
+    </section>
+  </div>
+
+  <section class="panel" id="trace" aria-label="Execution trace">
+    <h2>Live execution trace</h2>
+    <p class="sub">Real session events from this server run. Nothing here is scripted.</p>
+    <div class="trace-legend" aria-hidden="true">
+      <span class="stage observe">OBSERVE</span><span class="arrow">→</span>
+      <span class="stage evaluate">EVALUATE</span><span class="arrow">→</span>
+      <span class="stage inspect">MAKE IT INSPECTABLE</span>
+    </div>
+    <ol class="trace" id="trace-list">
+      <li><span class="nodata">Waiting for session events…</span></li>
+    </ol>
+  </section>
+
+  <section id="honesty" aria-label="Honesty engine">
+    <div class="honesty-grid">
+      <div class="panel">
+        <h2>Preregistered experiments</h2>
+        <p class="sub">Declared before results exist, so we can&rsquo;t cherry-pick.</p>
+        <ul class="plain">
+          <li><span class="status-tag">NOT STARTED</span>
+            <strong>EXP-001</strong> — does the ±0.30% band beat ±0.50% on
+            baseline comparisons? Needs v0.2 paper positions first.</li>
+          <li><span class="status-tag">NOT STARTED</span>
+            <strong>EXP-002</strong> — warmup length vs. signal stability
+            (20 vs. 40 samples). Needs persistent history (v0.2).</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Failure log</h2>
+        <p class="sub">Published misses. Session errors also appear in the trace above.</p>
+        <ul class="plain">
+          <li><strong>2026-09-17</strong> — activity formula diverged from the
+            dossier (dead at rest). Fixed in Phase 2: idle glow 0.12.</li>
+          <li>No live-market failures yet — showcase mode only, no real pair tracked.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Measured vs. chosen</h2>
+        <p class="sub">What the feed tells us, and what we picked.</p>
+        <table class="split">
+          <thead><tr><th>Measured (from data)</th><th>Chosen (our parameters)</th></tr></thead>
+          <tbody>
+            <tr><td>Price per sample</td><td>Windows MA5 / MA20</td></tr>
+            <tr><td>Fast/slow averages</td><td>Threshold ±0.30%</td></tr>
+            <tr><td>Spread between them</td><td>Activity = min(1, |spread|·30 + 0.12)</td></tr>
+            <tr><td>Journaled observations</td><td>Warmup 20 · gap reset 90s</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h2>What isn&rsquo;t real</h2>
+        <p class="sub">Read this before believing any pixel.</p>
+        <ul class="plain">
+          <li>Showcase prices are synthetic demo data, labeled on every response.</li>
+          <li>Art and activity graph are illustrative procedural geometry — no neural net, no brain model, no brain data.</li>
+          <li>Fear/Hunt mood buttons are illustrative fiction — seeded red (fear) / blue (hunt) decorations plus cartoon loops; no real fear or hunt neurons are modeled, no neuroscience claim.</li>
+          <li>Signals are observations, not financial advice. Past observations imply nothing about future results.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="sources" aria-label="Source explorer">
+    <h2>Built in the open</h2>
+    <p class="sub">Clean-room code, Python stdlib only. This is the whole machine:</p>
+    <ul class="sources">
+      <li><code>app.py</code> — <span>local server, SQLite journal, JSON export</span></li>
+      <li><code>cat/engine.py</code> — <span>MA5/MA20 rule engine, warmup, activity</span></li>
+      <li><code>cat/providers.py</code> — <span>read-only price adapter, strict pair match</span></li>
+      <li><code>cat/showcase.py</code> — <span>deterministic synthetic series (labeled)</span></li>
+      <li><code>config.json</code> — <span>mode + pair (blank until our pool exists)</span></li>
+      <li><code>web/</code> — <span>this page: vanilla HTML/CSS/JS, no dependencies</span></li>
+      <li><code>SPEC.md</code> — <span>the written spec; harnesses audit this page against it</span></li>
+      <li><code>tests/</code> — <span>offline unit tests; run with
+        <span class="mono">python3 -m unittest discover -s tests -v</span></span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <div>KITTYBRAIN is a placeholder name; ticker, art, and copy are not final.
+      Signals are observations, not financial advice.</div>
+    <ol>
+      <li>Cat cortical-neuron estimate (~250M): Herculano-Houzel /
+        Jardim-Messeder 2017. Biological inspiration only, not software capability.</li>
+    </ol>
+  </footer>
+</main>
+
+<script src="/cat.js"></script>
+<script src="/cat-sprite.js"></script>
+<script src="/moods.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

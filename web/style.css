@@ -1,0 +1,389 @@
+/* KITTYBRAIN landing — dark lab theme, MOBILE-FIRST (base = small screens,
+ * wider layouts added via min-width queries). Vanilla CSS, no deps. */
+:root {
+  --bg: #14120e;
+  --panel: #1d1913;
+  --panel-edge: #2e2820;
+  --ink: #ece5d8;
+  --muted: #a89c86;
+  --faint: #6f6658;
+  --accent: #d9a441;
+  --accent-ink: #1a1409;
+  --good: #7fb069;
+  --bad: #c1666b;
+  --wait: #c9a227;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+a { color: var(--accent); }
+small, .fine { color: var(--muted); font-size: 0.85rem; }
+
+/* Skip link (keyboard users) */
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 20;
+  background: var(--panel); color: var(--ink);
+  padding: 8px 14px; border: 1px solid var(--accent); border-radius: 6px;
+}
+.skip:focus { left: 8px; top: 8px; }
+
+/* Header */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(20, 18, 14, 0.94);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--panel-edge);
+}
+.brand { font-weight: 700; letter-spacing: 0.06em; font-size: 1.05rem; }
+.badge {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+  border: 1px solid var(--panel-edge); border-radius: 999px;
+  padding: 2px 10px; color: var(--muted); white-space: nowrap;
+}
+.badge.live { color: var(--good); border-color: var(--good); }
+.badge.showcase { color: var(--accent); border-color: var(--accent); }
+.topbar .spacer { flex: 1; }
+.placeholder-note { display: none; font-size: 0.75rem; color: var(--faint); }
+
+/* Hero — mascot first, centered; the 10-second read. */
+.hero { text-align: center; padding: 30px 0 8px; }
+.hero-mascot { position: relative; margin: 0 auto 6px; max-width: 250px; }
+.hero-mascot::before {
+  content: "";
+  position: absolute; inset: -14%; z-index: -1;
+  background: radial-gradient(closest-side,
+    rgba(217, 164, 65, 0.16), rgba(217, 164, 65, 0));
+  pointer-events: none;
+}
+.hero figcaption {
+  font-size: 0.78rem; color: var(--faint);
+  margin: 8px auto 0; max-width: 34ch;
+}
+/* In-flow pill between the mascot SVG and its caption — centered via the
+   hero's text-align, so it can never cover the mascot, the figcaption, or
+   any copy at any width (no magic offsets). */
+.tap-hint {
+  display: inline-block; margin: 6px 0 2px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--accent-ink); background: var(--accent);
+  border-radius: 999px; padding: 3px 10px;
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.1rem, 1.5rem + 4vw, 3rem);
+  line-height: 1.12; margin: 14px 0 12px;
+}
+.hero .lede {
+  font-size: 1.1rem; margin: 0 auto 14px; max-width: 54ch;
+}
+.chip-row {
+  list-style: none; margin: 0 0 12px; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.chip {
+  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.02em;
+  border: 1px solid var(--panel-edge); border-radius: 999px;
+  background: var(--panel); color: var(--muted);
+  padding: 4px 12px; white-space: nowrap;
+}
+.hero .fine { margin: 4px auto; max-width: 58ch; }
+
+/* Cartoon cat sprite (inline SVG, no asset files) */
+#cat-sprite { width: 100%; height: auto; display: block; cursor: pointer; }
+#cat-sprite:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 8px; }
+
+/* Sprite reactions: 8 CSS-keyframed animations, 300–600ms each, toggled by
+   cat-sprite.js via .playing-* classes. In reduced-motion the global rule
+   below disables all of these and cat-sprite.js falls back to a single
+   JS-driven blink. */
+#cat-lid-l, #cat-lid-r { transform: scaleY(0); transform-box: fill-box; transform-origin: 50% 0; }
+#cat-ear-r { transform-box: fill-box; transform-origin: 50% 100%; }
+#cat-tail { transform-box: view-box; transform-origin: 168px 210px; }
+#cat-inner { transform-box: view-box; transform-origin: 50% 62%; }
+#cat-body { transform-box: fill-box; transform-origin: 50% 100%; }
+#cat-paw-r { transform-box: fill-box; transform-origin: 50% 100%; }
+
+.playing-blink #cat-lid-l, .playing-blink #cat-lid-r { animation: catBlink 320ms ease-in-out; }
+.playing-wink #cat-lid-r { animation: catBlink 460ms ease-in-out; }
+.playing-ear-twitch #cat-ear-r { animation: catEarTwitch 400ms ease-in-out; }
+.playing-bounce #cat-inner { animation: catBounce 480ms ease-in-out; }
+.playing-tail-swish #cat-tail { animation: catTailSwish 560ms ease-in-out; }
+.playing-purr #cat-inner { animation: catPurr 520ms linear; }
+.playing-paw-wave #cat-paw-r { animation: catPawWave 480ms ease-in-out; }
+.playing-loaf-squash #cat-body { animation: catLoafSquash 540ms ease-in-out; }
+/* Head dips with the squash so the neck never shows a seam mid-animation. */
+.playing-loaf-squash #cat-head { animation: catLoafDip 540ms ease-in-out; }
+
+@keyframes catBlink {
+  0%, 100% { transform: scaleY(0); }
+  45%, 55% { transform: scaleY(1); }
+}
+@keyframes catEarTwitch {
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(-14deg); }
+  60% { transform: rotate(7deg); }
+  80% { transform: rotate(-3deg); }
+}
+@keyframes catBounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(-12px) scale(1.02, 1.03); }
+  55% { transform: translateY(0) scale(1.05, 0.92); }
+  75% { transform: translateY(-4px) scale(0.99, 1.01); }
+}
+@keyframes catTailSwish {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(16deg); }
+  55% { transform: rotate(-10deg); }
+  80% { transform: rotate(5deg); }
+}
+@keyframes catPurr {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(1.5px, -1px) rotate(0.5deg); }
+  40% { transform: translate(-1.5px, 1px) rotate(-0.5deg); }
+  60% { transform: translate(1.5px, 1px) rotate(0.4deg); }
+  80% { transform: translate(-1.5px, -1px) rotate(-0.4deg); }
+}
+@keyframes catPawWave {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-7px) rotate(-14deg); }
+  55% { transform: translateY(-7px) rotate(8deg); }
+  75% { transform: translateY(-3px) rotate(-5deg); }
+}
+@keyframes catLoafSquash {
+  0%, 100% { transform: scale(1, 1); }
+  40%, 60% { transform: scale(1.06, 0.9); }
+}
+@keyframes catLoafDip {
+  0%, 100% { transform: translateY(0); }
+  40%, 60% { transform: translateY(5px); }
+}
+
+/* Mood circuits — button row under the graph + two hidden hero scenes.
+   Illustrative fiction only: the scenes are hand-coded inline SVG loops
+   (no asset files); the global reduced-motion rule below freezes them on
+   their composed static frame (no looping). */
+.mood-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.mood-btn[aria-pressed="true"] {
+  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+}
+#mood-fear[aria-pressed="true"], #mood-hunt[aria-pressed="true"] {
+  background: var(--bad); border-color: var(--bad); color: #fff;
+}
+.mood-note { margin: 6px 2px 0; }
+.mood-scene { width: 100%; height: auto; display: block; }
+#cat-sprite[hidden], .mood-scene[hidden] { display: none !important; }
+.motion-note {
+  margin: 8px auto 0; max-width: 34ch;
+  font-size: 0.78rem; color: var(--faint);
+}
+/* Scene loops: ground strip scrolls (48px tile), characters bob, legs
+   scissor, tails wag. Every scene is a complete composed frame even with
+   animation disabled. */
+.mg-scroll { animation: mgScroll 1.1s linear infinite; }
+.mg-bob { animation: mgBob 0.52s ease-in-out infinite; }
+.mg-bob-late { animation: mgBob 0.52s ease-in-out -0.26s infinite; }
+.mg-leg-a, .mg-leg-b {
+  transform-box: fill-box; transform-origin: 50% 0;
+  animation: mgLegScissor 0.26s ease-in-out infinite alternate;
+}
+.mg-leg-b { animation-delay: -0.26s; }
+.mg-tail {
+  transform-box: fill-box; transform-origin: 100% 100%;
+  animation: mgTailWag 0.8s ease-in-out infinite alternate;
+}
+@keyframes mgScroll { from { transform: translateX(0); } to { transform: translateX(-48px); } }
+@keyframes mgBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes mgLegScissor { from { transform: rotate(22deg); } to { transform: rotate(-22deg); } }
+@keyframes mgTailWag { from { transform: rotate(-12deg); } to { transform: rotate(14deg); } }
+/* Motion cues (manager redirect 2026-09-18): speed lines streak backward,
+   dust puffs bloom at the feet. Both fade to opacity 0 at each end, so the
+   loop seam is invisible; a faint static opacity keeps them readable on the
+   frozen (reduced-motion) frame too. */
+.mg-speed {
+  animation: mgSpeed 0.45s linear infinite;
+}
+.mg-puff {
+  transform-box: fill-box; transform-origin: 50% 50%;
+  animation: mgPuff 0.52s ease-out infinite;
+}
+.mg-pounce { animation: mgPounce 1.6s ease-in-out infinite; }
+.mg-dodge { animation: mgDodge 1.6s ease-in-out infinite; }
+@keyframes mgSpeed {
+  0% { transform: translateX(8px); opacity: 0; }
+  25% { opacity: 0.7; }
+  100% { transform: translateX(-16px); opacity: 0; }
+}
+@keyframes mgPuff {
+  0% { transform: scale(0.4); opacity: 0; }
+  30% { opacity: 0.45; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+/* Hunt: cat crouch-creep → spring → land → recoil; the mouse dodge hops at
+   the spring instant and drifts back in the same 1600ms period, so both
+   loops seam exactly at 0%/100% (checked by catmoods_harness.py). */
+@keyframes mgPounce {
+  0%, 100% { transform: translate(0, 3px) rotate(1deg); }
+  25% { transform: translate(2px, 4px) rotate(2deg); }
+  42% { transform: translate(0, 4px) rotate(2deg); }
+  55% { transform: translate(26px, -16px) rotate(-6deg); }
+  70% { transform: translate(34px, 2px) rotate(0deg); }
+  84% { transform: translate(26px, 3px) rotate(1deg); }
+}
+@keyframes mgDodge {
+  0%, 100% { transform: translate(0, 0); }
+  42% { transform: translate(0, 0); }
+  54% { transform: translate(18px, -9px); }
+  64% { transform: translate(22px, 1px); }
+  82% { transform: translate(18px, 0); }
+}
+
+/* Page sections */
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px 56px; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-top: 18px;
+}
+.panel h2 { font-size: 1.05rem; margin: 0 0 4px; letter-spacing: 0.02em; }
+.panel .sub { color: var(--muted); font-size: 0.87rem; margin: 0 0 12px; }
+
+/* Cat canvas (activity field) — the first live section under the hero. */
+.cat-shell { position: relative; }
+#catchart { width: 100%; height: 340px; display: block; background: #100e0a; border-radius: 6px; touch-action: none; cursor: grab; }
+#catchart:active { cursor: grabbing; }
+.viewport-hint { margin: 6px 2px 0; }
+.cat-controls { display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+button.ghost {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--panel-edge); border-radius: 6px;
+  padding: 6px 14px; font-size: 0.85rem; cursor: pointer;
+}
+button.ghost:hover { border-color: var(--accent); }
+button.ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Radar + decision */
+.grid-2 > .panel .table-scroll { flex: 1 1 auto; }
+.grid-2 > .panel .no-order { margin-top: auto; }
+.grid-2 > .panel .kv { margin-bottom: 14px; }
+
+/* Radar table */
+.table-scroll { overflow-x: auto; }
+table.radar { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+table.radar th, table.radar td {
+  text-align: left; padding: 8px 10px;
+  border-bottom: 1px solid var(--panel-edge);
+  white-space: nowrap;
+}
+table.radar th { color: var(--muted); font-weight: 600; font-size: 0.78rem; }
+table.radar td.num, table.radar th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.nodata { color: var(--faint); font-style: italic; }
+.mono { font-family: var(--mono); font-size: 0.82rem; }
+
+/* Signals */
+.signal { font-weight: 700; letter-spacing: 0.03em; }
+.signal.positive { color: var(--good); }
+.signal.negative { color: var(--bad); }
+.signal.neutral { color: var(--muted); }
+.signal.waiting { color: var(--wait); }
+
+/* Decision panel */
+.decision-state { font-size: 1.6rem; font-weight: 700; margin: 6px 0; }
+.decision-state.waiting { color: var(--wait); }
+.decision-state.nodata { color: var(--faint); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 0.9rem; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-variant-numeric: tabular-nums; }
+.no-order {
+  margin-top: 14px; padding: 10px 12px;
+  border: 1px dashed var(--faint); border-radius: 6px;
+  font-size: 0.87rem; color: var(--muted);
+}
+
+/* Trace */
+.trace-legend { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.stage {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+  border: 1px solid var(--panel-edge); border-radius: 4px;
+  padding: 1px 8px; color: var(--muted);
+}
+.stage.observe { color: var(--accent); border-color: var(--accent); }
+.stage.evaluate { color: var(--wait); border-color: var(--wait); }
+.stage.inspect { color: var(--good); border-color: var(--good); }
+.arrow { color: var(--faint); }
+ol.trace { list-style: none; margin: 0; padding: 0 0 20px; max-height: 300px; overflow-y: auto; scroll-padding-bottom: 20px; }
+ol.trace li {
+  display: flex; gap: 10px; align-items: baseline;
+  padding: 6px 4px; border-bottom: 1px solid var(--panel-edge);
+  font-size: 0.86rem;
+}
+ol.trace time { font-family: var(--mono); font-size: 0.75rem; color: var(--faint); white-space: nowrap; }
+ol.trace .kind { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+
+/* Honesty engine */
+.honesty-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+table.split { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+table.split th, table.split td {
+  text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--panel-edge);
+  vertical-align: top;
+}
+table.split th { color: var(--muted); font-size: 0.78rem; }
+ul.plain { margin: 8px 0; padding-left: 20px; font-size: 0.9rem; }
+ul.plain li { margin-bottom: 6px; }
+.status-tag {
+  font-size: 0.72rem; font-weight: 700; border: 1px solid var(--faint);
+  border-radius: 4px; padding: 0 6px; color: var(--muted); white-space: nowrap;
+}
+
+/* Source explorer */
+ul.sources { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
+ul.sources li { padding: 7px 0; border-bottom: 1px solid var(--panel-edge); }
+ul.sources code { font-family: var(--mono); font-size: 0.82rem; color: var(--accent); }
+ul.sources span { color: var(--muted); }
+
+/* Footer */
+footer {
+  margin-top: 36px; padding-top: 18px;
+  border-top: 1px solid var(--panel-edge);
+  color: var(--muted); font-size: 0.82rem;
+}
+footer ol { padding-left: 20px; margin: 8px 0; }
+
+/* Wider screens — layered on top of the mobile base. */
+@media (min-width: 760px) {
+  .placeholder-note { display: inline; }
+  .wrap { padding: 0 20px 64px; }
+  .hero { padding: 40px 0 10px; }
+  .hero-mascot { max-width: 300px; }
+  .grid-2 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; align-items: stretch; }
+  .grid-2 > .panel { display: flex; flex-direction: column; }
+  .honesty-grid { grid-template-columns: 1fr 1fr; gap: 22px; }
+  .honesty-grid .panel { margin-top: 0; }
+  #honesty { margin-top: 22px; }
+  #catchart { height: 520px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  /* !important is required: plain `animation: none` on the universal
+     selector loses specificity to the class-level .mg-*/sprite rules and
+     their loops would keep running. */
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
