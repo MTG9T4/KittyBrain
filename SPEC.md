@@ -332,3 +332,29 @@ ground dashes, speed lines, dust, loop timing, caption + fiction labels,
 catmoods harness green, and raster previews
 (`.agents/audit/previews/fear-tail-fix-{rest,wag}.svg.png`) show clean
 separation at rest and at the deepest wag frame with no new overlaps.
+
+### 6.9 v0.3.7 announce-readiness copy micro-sweep (2026-09-18, MTG direction)
+
+With announce traffic expected and the ticker still not chosen, the header
+badge now reads `KITTYBRAIN · local only` and the hero honesty chip reads
+`KITTYBRAIN · ticker TBA`; the honesty meaning survives (chip + the footer
+honesty div "KITTYBRAIN is a placeholder name; ticker, art, and copy are
+not final", and the `BRAND` constant is untouched). Two-line change inside
+`web/index.html` only; no layout/CSS/JS/circuit/scene edits. Verified:
+suite 61/61, `node --check` ×4, no user-visible "undecided" string remains
+(the static `landing_harness.py` honesty list is now stale by this order
+and needs a manager-approved refresh).
+
+### 6.10 v0.3.8 ticker-goes-live copy flip (2026-09-18, manager pre-approved)
+
+The coin now EXISTS and the live radar is proven reading our pool, so the
+"ticker TBA" copy flips: hero honesty chip `KITTYBRAIN · ticker TBA` →
+`KITTYBRAIN`; footer honesty div "KITTYBRAIN is a placeholder name;
+ticker, art, and copy are not final." → "KITTYBRAIN · ticker live on
+pump.fun; art and copy evolving." (the "not financial advice" sentence on
+the next line is untouched). Scope: 2 lines in `web/index.html` plus the
+manager pre-approved refresh of `.agents/audit/landing_harness.py`
+expected strings (the stale-strings flag from §6.9 is now resolved).
+BRAND constant, CSS, JS, circuits, scenes, tests untouched. Verified:
+suite 61/61, `node --check` ×4, zero "TBA" in `web/index.html`,
+`landing_harness.py` LANDING-OK.
