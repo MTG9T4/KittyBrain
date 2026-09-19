@@ -1,21 +1,39 @@
-# KITTYBRAIN
+# KittyBrain
 
-3D cat-brain market observation terminal + pump.fun token for creator rewards.
-CrowBrain-style build, reskinned and re-engineered around a cat brain.
+Experimental cat-brain market observation terminal. Illustrative signals, not financial advice.
 
-## What's in this folder
+Rule-based signal engine (MA5 vs MA20 moving averages) with a cartoon-mascot showcase UI.
+No neural net, no connectome, no wallet connection, no auto-trading. Inspired by
+CROWBRAIN (`sopersone/CROWBRAIN`) and the fly-brain connectome work — clean-room code,
+no GPL copying (MIT licensed).
 
-- `PLAN.md` — the full build + launch plan (start here)
-- `SOURCES.md` — the 5 source URLs, what each one teaches us
-- `CHECKLIST.md` — decisions + actions waiting on MTG
+## Run (local showcase)
 
-## Status
+```
+python3 app.py
+# → http://127.0.0.1:8000
+```
 
-- 2026-09-17: research complete, plan written. No code yet — waiting on MTG's go-ahead.
-- Companion notes live in the gal Obsidian vault: `projects/catbrain-overview.md`, `projects/catbrain-plan.md`, `reference/crowbrain-analysis.md`, `reference/pumpfun-creator-fees.md`, `reference/cat-brain-science.md`, `reference/fly-connectome-notes.md`.
+Tests: `python3 -m unittest discover -s tests -v` (58 green).
 
-## Honest framing (same as CROW v0.1)
+Live mode is read-only public market data with strict pair matching; with a blank
+pair it reports an error and never polls. Blank until our own pool is verified
+after launch — never pointed at anything unverified.
 
-- Rule-based signal engine + illustrative 3D point cloud. NOT a biological brain replica, NOT a trained neural net, NO wallet or auto-trading in v0.1.
-- Neuron counts are biological inspiration with a cited source, never the software's capability.
-- Signals are observations, not financial advice, with no profitability claims.
+## Honest framing
+
+- Biological neuron counts (cat cortex ~250M, Herculano-Houzel 2017) are inspiration
+  with a cited source — never this software's capability.
+- Signals are observations, not financial advice. No profitability claims anywhere.
+
+## Links
+
+- Site: https://kittybrain.fyi (wiring in progress)
+- X: https://x.com/MTG9T4
+- Coin: TBD — created by owner at launch, links added then.
+
+## Docs
+
+- `PLAN.md` — build + launch plan
+- `SPEC.md` — formal spec
+- `SOURCES.md` — reference sources and what each teaches
